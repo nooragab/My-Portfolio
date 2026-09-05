@@ -14,39 +14,31 @@ export const DATA = {
     { href: "/blog", icon: Icons.notebook, label: "Blog" },
     { href: "/resume.pdf", icon: Icons.fileuser, label: "CV" },
   ],
-  location: "Singapore",
-  locationLink: "https://www.google.com/maps/place/singapore",
-  discover: [
-    { name: "HPC-AI Lab", url: "https://ai.comp.nus.edu.sg/" },
-    { name: "iCyPhy", url: "https://www.icyphy.org/people.html" },
-    {
-      name: "Template",
-      url: "https://github.com/zhengzangw/nextjs-portfolio-blog-research",
-    },
-  ],
+  location: "EGYPT",
+  locationLink: "https://www.google.com/maps/place/egypt",
   contact: {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://github.com/zhengzangw",
+        url: "https://github.com/nooragab",
         icon: Icons.github,
         footer: true,
       },
       X: {
         name: "X",
-        url: "https://x.com/zangweizheng",
+        url: "https://x.com/nooragab",
         icon: Icons.x,
         footer: true,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://www.linkedin.com/in/zangweizheng/",
+        url: "https://www.linkedin.com/in/nour-ragab/",
         icon: Icons.linkedin,
         footer: true,
       },
       email: {
         name: "Email",
-        url: "mailto:zhengzangwei@gmail.com",
+        url: "mailto:nourragab2811@gmail.com",
         icon: Icons.email,
         footer: false,
       },

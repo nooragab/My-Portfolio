@@ -65,8 +65,8 @@ export function ProjectCard({
   return (
     <Card
       className={cn(
-        "flex h-full flex-col overflow-hidden border transition-all duration-300 ease-out hover:shadow-lg",
-        isTapped && "shadow-lg",
+        "flex h-full flex-col overflow-hidden p-3 transition-all duration-300 ease-out hover:shadow-lg dark:hover:border-white/20 dark:hover:bg-white/[0.05]",
+        isTapped && "shadow-lg dark:border-white/20 dark:bg-white/[0.05]",
       )}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
@@ -77,7 +77,7 @@ export function ProjectCard({
         aria-label={`View project: ${title}`}
       >
         {video && (
-          <div className="bg-muted relative h-40 w-full overflow-hidden rounded-md sm:h-44 md:h-48">
+          <div className="bg-muted relative h-40 w-full overflow-hidden rounded-lg sm:h-44 md:h-48">
             {/* blurred background video to fill empty space */}
             <video
               src={video}
@@ -115,7 +115,7 @@ export function ProjectCard({
           </div>
         )}
         {image && (
-          <div className="bg-muted relative h-40 w-full overflow-hidden rounded-md sm:h-44 md:h-48">
+          <div className="bg-muted relative h-40 w-full overflow-hidden rounded-lg sm:h-44 md:h-48">
             {/* blurred background to fill empty space */}
             <Image
               src={image}
@@ -149,7 +149,9 @@ export function ProjectCard({
           <CardTitle className="mt-1 text-base [&_img]:my-0 [&_img]:inline-block [&_img]:h-[1em] [&_img]:w-auto [&_img]:align-baseline">
             <CustomReactMarkdown>{title}</CustomReactMarkdown>
           </CardTitle>
-          <time className="font-sans text-xs">{dates}</time>
+          <time className="text-muted-foreground font-sans text-xs tracking-widest uppercase">
+            {dates}
+          </time>
           <div className="hidden font-sans text-xs underline print:visible">
             {link?.replace("https://", "").replace("www.", "").replace("/", "")}
           </div>

@@ -26,33 +26,35 @@ export default function Brief({
 
   return (
     <div
-      className={`flex flex-col-reverse items-center justify-center gap-6 sm:flex-row sm:justify-between md:gap-8 lg:gap-10 ${className || ""}`}
+      className={`hero-grid glass-surface overflow-hidden rounded-3xl border border-transparent p-6 dark:border-white/10 sm:p-10 ${className || ""}`}
     >
-      <div className="flex flex-1 flex-col items-center space-y-1.5 text-center sm:items-start sm:text-left">
-        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-          {firstName && surname ? (
-            isChinese ? (
-              `${surname}${firstName}`
+      <div className="relative z-10 flex flex-col-reverse items-center justify-center gap-6 sm:flex-row sm:justify-between md:gap-8 lg:gap-10">
+        <div className="flex flex-1 flex-col items-center space-y-1.5 text-center sm:items-start sm:text-left">
+          <h1 className="font-serif text-3xl font-semibold tracking-tight sm:text-5xl xl:text-6xl/none">
+            {firstName && surname ? (
+              isChinese ? (
+                `${surname}${firstName}`
+              ) : (
+                <>
+                  <span>{firstName}</span>{" "}
+                  <span className="inline-block w-1"></span>
+                  <span>{surname}</span>
+                </>
+              )
             ) : (
-              <>
-                <span>{firstName}</span>{" "}
-                <span className="inline-block w-1"></span>
-                <span>{surname}</span>
-              </>
-            )
-          ) : (
-            name
-          )}
-        </h1>
-        <p className="text-muted-foreground text-lg">{subtitle}</p>
-        <p className="max-w-[600px] whitespace-pre-line md:text-xl">
-          {description}
-        </p>
+              name
+            )}
+          </h1>
+          <p className="text-muted-foreground text-lg">{subtitle}</p>
+          <p className="max-w-[600px] whitespace-pre-line md:text-xl">
+            {description}
+          </p>
+        </div>
+        <Avatar className="avatar-glow size-24 border sm:size-28 md:size-32 lg:size-36">
+          <AvatarImage alt={name} src={avatarUrl} />
+          <AvatarFallback>{initials}</AvatarFallback>
+        </Avatar>
       </div>
-      <Avatar className="size-24 border sm:size-28 md:size-32 lg:size-36">
-        <AvatarImage alt={name} src={avatarUrl} />
-        <AvatarFallback>{initials}</AvatarFallback>
-      </Avatar>
     </div>
   );
 }

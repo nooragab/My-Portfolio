@@ -1,18 +1,13 @@
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 import type React from "react";
 
-import { Icons } from "@/components/icons";
-import AwardsSection from "@/components/portfolio/awards-section";
 import Brief from "@/components/portfolio/brief";
+import Certificates from "@/components/portfolio/certificates";
 import Contact from "@/components/portfolio/contact";
 import Education from "@/components/portfolio/education";
-import NewsSection from "@/components/portfolio/news";
 import ProjectsSection from "@/components/portfolio/projects-section/projects-section";
-import Services from "@/components/portfolio/services";
 import Skills from "@/components/portfolio/skills";
 import SocialLinks from "@/components/portfolio/socallinks";
-import Talks from "@/components/portfolio/talks";
 import Work from "@/components/portfolio/work";
 import { CustomReactMarkdown } from "@/components/react-markdown";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -58,8 +53,6 @@ export default async function Page(props: {
   };
 
   const skills = getArrayField<string>("skills");
-  const reviewerConferences = getArrayField<string>("reviewerConferences");
-  const reviewerJournals = getArrayField<string>("reviewerJournals");
 
   const personJsonLd = await generatePersonJsonLd(locale);
 
@@ -88,11 +81,6 @@ export default async function Page(props: {
   };
 
   // Get collections data and check if items are empty
-  const newsItems = getCollectionItems<{
-    date: string;
-    title: string;
-    content: string;
-  }>("news.items");
   const projectsItems = getCollectionItems<{
     title: string;
     href?: string;
@@ -105,18 +93,6 @@ export default async function Page(props: {
     image?: string;
     video?: string;
   }>("projects.items");
-  const publicationsItems = getCollectionItems<{
-    title: string;
-    href?: string;
-    dates: string;
-    active: boolean;
-    description: string;
-    technologies: string[];
-    authors: string;
-    links?: Array<{ type: string; href: string; icon: string }>;
-    image?: string;
-    video?: string;
-  }>("publications.items");
   const educationItems = getCollectionItems<{
     school: string;
     href: string;
@@ -136,22 +112,13 @@ export default async function Page(props: {
     end: string;
     description: string;
   }>("work.items");
-  const awardsItems = getCollectionItems<{
-    year: number;
+  const certificatesItems = getCollectionItems<{
     title: string;
-  }>("awards.items");
-  const teachingItems = getCollectionItems<{
+    issuer: string;
+    href?: string;
+    logoUrl: string;
     date: string;
-    title: string;
-    location: string;
-  }>("teaching.items");
-  const invitedTalksItems = getCollectionItems<{
-    host: string;
-    url: string;
-    date: string;
-    title: string;
-    logoUrl?: string;
-  }>("invitedTalks.items");
+  }>("certificates.items");
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-7xl flex-col space-y-8 px-6 py-8 pb-24 sm:space-y-10 sm:px-16 md:px-20 md:py-16 md:pt-14 lg:px-24 lg:py-20 xl:px-32 xl:py-24">
@@ -183,7 +150,7 @@ export default async function Page(props: {
       {/* About Section */}
       <section id="about">
         <BlurFade delay={BLUR_FADE_DELAY * 3}>
-          <h2 className="text-xl font-bold">{t("sections.about")}</h2>
+          <h2 className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">{t("sections.about")}</h2>
         </BlurFade>
         <BlurFade delay={BLUR_FADE_DELAY * 4}>
           <div className="prose text-muted-foreground dark:prose-invert max-w-full font-sans text-sm text-pretty [&_img]:my-0 [&_img]:inline-block [&_img]:h-[1em] [&_img]:w-auto [&_img]:align-baseline">
@@ -192,25 +159,13 @@ export default async function Page(props: {
         </BlurFade>
       </section>
 
-      {/* News Section */}
-      {newsItems && newsItems.length > 0 && (
-        <section id="news">
-          <NewsSection
-            news={newsItems}
-            delay={BLUR_FADE_DELAY * 5}
-            title={t("sections.news.title")}
-            showAllText={t("showAll")}
-          />
-        </section>
-      )}
-
       {/* Projects Section */}
       {projectsItems && projectsItems.length > 0 && (
         <section id="projects">
           <div className="w-full space-y-12 py-12">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="bg-foreground text-background inline-block rounded-lg px-3 py-1 text-sm">
+                <div className="bg-foreground text-background inline-block rounded-full px-3 py-1 text-sm dark:border dark:border-white/15 dark:bg-white/[0.06] dark:text-foreground dark:font-semibold dark:tracking-wide dark:uppercase dark:backdrop-blur-md">
                   {t("sections.selectedProjects")}
                 </div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
@@ -234,52 +189,11 @@ export default async function Page(props: {
         </section>
       )}
 
-      {/* Publications Section */}
-      {publicationsItems && publicationsItems.length > 0 && (
-        <section id="publications">
-          <div className="w-full space-y-12 py-12">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <div className="bg-foreground text-background inline-block rounded-lg px-3 py-1 text-sm">
-                  {t("sections.research")}
-                </div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  {t("sections.publications.title")}
-                </h2>
-                <p className="text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  {t("sections.viewFullPublications")}{" "}
-                  <Link
-                    href={socialData.GoogleScholar.url}
-                    className="text-foreground underline hover:no-underline"
-                    target="_blank"
-                  >
-                    {socialData.GoogleScholar.name}
-                  </Link>
-                </p>
-              </div>
-            </div>
-            <ProjectsSection
-              projects={publicationsItems.map((project) => ({
-                ...project,
-                links: project.links?.map((link) => ({
-                  ...link,
-                  icon: getIconComponent(link.icon),
-                })),
-              }))}
-              delay={BLUR_FADE_DELAY * 3}
-              mobileDisplayCount={6}
-              desktopDisplayCount={6}
-              showAllText={t("showAll")}
-            />
-          </div>
-        </section>
-      )}
-
       {/* Skills Section */}
       {Array.isArray(skills) && skills.length > 0 && (
         <section id="skills">
           <div className="flex min-h-0 flex-col gap-y-3">
-            <h2 className="text-xl font-bold">{t("sections.skills")}</h2>
+            <h2 className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">{t("sections.skills")}</h2>
             <Skills skills={skills} />
           </div>
         </section>
@@ -289,7 +203,7 @@ export default async function Page(props: {
       {educationItems && educationItems.length > 0 && (
         <section id="education">
           <div className="flex min-h-0 flex-col gap-y-3">
-            <h2 className="text-xl font-bold">{t("sections.education")}</h2>
+            <h2 className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">{t("sections.education")}</h2>
             <Education educations={educationItems} />
           </div>
         </section>
@@ -299,7 +213,7 @@ export default async function Page(props: {
       {Array.isArray(workItems) && workItems.length > 0 && (
         <section id="work">
           <div className="flex min-h-0 flex-col gap-y-3">
-            <h2 className="text-xl font-bold">
+            <h2 className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
               {t("sections.workExperience")}
             </h2>
             <Work work={workItems} />
@@ -307,48 +221,14 @@ export default async function Page(props: {
         </section>
       )}
 
-      {/* Awards Section */}
-      {awardsItems && awardsItems.length > 0 && (
-        <section id="awards">
-          <h2 className="text-xl font-bold">{t("sections.awards")}</h2>
-          <AwardsSection awards={awardsItems} showAllText={t("showAll")} />
-        </section>
-      )}
-
-      {/* Academic Services Section */}
-      {((Array.isArray(reviewerConferences) &&
-        reviewerConferences.length > 0) ||
-        (Array.isArray(reviewerJournals) && reviewerJournals.length > 0) ||
-        (Array.isArray(teachingItems) && teachingItems.length > 0)) && (
-        <section id="academic-services">
+      {/* Certificates Section */}
+      {certificatesItems && certificatesItems.length > 0 && (
+        <section id="certificates">
           <div className="flex min-h-0 flex-col gap-y-3">
-            <h2 className="text-xl font-bold">
-              {t("sections.academicServices")}
+            <h2 className="text-muted-foreground text-xs font-semibold tracking-[0.2em] uppercase">
+              {t("sections.certificates")}
             </h2>
-            <Services
-              reviewerConferences={reviewerConferences}
-              reviewerJournals={reviewerJournals}
-              teaching={teachingItems}
-              reviewerConferencesLabel={t(
-                "sections.teaching.reviewerConferencesLabel",
-              )}
-              reviewerJournalsLabel={t(
-                "sections.teaching.reviewerJournalsLabel",
-              )}
-              teachingLabel={t("sections.teaching.teachingLabel")}
-            />
-          </div>
-        </section>
-      )}
-
-      {/* Invited Talks Section */}
-      {invitedTalksItems && invitedTalksItems.length > 0 && (
-        <section id="invited-talks">
-          <div className="flex min-h-0 flex-col gap-y-3">
-            <h2 className="text-xl font-bold">
-              {t("sections.invitedTalks.title")}
-            </h2>
-            <Talks talks={invitedTalksItems} showAllText={t("showAll")} />
+            <Certificates certificates={certificatesItems} />
           </div>
         </section>
       )}
@@ -358,15 +238,10 @@ export default async function Page(props: {
         <div className="grid w-full items-center justify-center gap-4 px-4 py-12 text-center md:px-6">
           <Contact
             emailUrl={socialData.email.url}
-            calendlyUrl={socialData.calendly?.url}
             contactLabel={t("sections.contact")}
             getInTouch={t("sections.getInTouch")}
             contactDescription={t("sections.contactDescription")}
             viaEmail={t("sections.viaEmail")}
-            askQuestions={t("sections.askQuestions")}
-            exploreCollaboration={t("sections.exploreCollaboration")}
-            coffeeChat={t("sections.coffeeChat")}
-            schedule={t("sections.schedule")}
           />
         </div>
       </section>

@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { LanguageToggle } from "@/components/blocks/navbar/language-toggle";
 import { ModeToggle } from "@/components/blocks/navbar/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
 import { Dock, DockIcon } from "@/components/ui/dock";
@@ -43,7 +42,7 @@ export default function Navbar() {
     >
       <div
         className={cn(
-          "bg-background dark:bg-background fixed inset-x-0 bottom-0 h-16 w-full to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:top-0",
+          "bg-background dark:bg-background fixed inset-x-0 bottom-0 z-0 h-16 w-full to-transparent backdrop-blur-lg [-webkit-mask-image:linear-gradient(to_top,black,transparent)] md:hidden",
         )}
       ></div>
       <Dock className="bg-background pointer-events-auto relative z-50 mx-auto flex h-full min-h-full transform-gpu items-center px-1 [box-shadow:0_0_0_1px_rgba(0,0,0,.03),0_2px_4px_rgba(0,0,0,.05),0_12px_24px_rgba(0,0,0,.05)] md:mt-1 dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] dark:[border:1px_solid_rgba(255,255,255,.1)]">
@@ -132,16 +131,6 @@ export default function Navbar() {
             </TooltipTrigger>
             <TooltipContent side={isDesktop ? "bottom" : "top"} sideOffset={8}>
               <p>Theme</p>
-            </TooltipContent>
-          </Tooltip>
-        </DockIcon>
-        <DockIcon>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <LanguageToggle />
-            </TooltipTrigger>
-            <TooltipContent side={isDesktop ? "bottom" : "top"} sideOffset={8}>
-              <p>Language</p>
             </TooltipContent>
           </Tooltip>
         </DockIcon>

@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Icons } from "@/components/icons";
 import { Separator } from "@/components/ui/separator";
-import { DATA, getEmail } from "@/data";
+import { DATA } from "@/data";
 
 // Use DATA.contact.social directly instead of redefining socialLinks
 
@@ -28,7 +27,6 @@ export default function Footer() {
         education: "Education",
         experience: "Experience",
         skills: "Skills",
-        awards: "Awards",
       },
       sections: {
         quickNavigation: "Quick Navigation",
@@ -62,7 +60,6 @@ export default function Footer() {
         education: "教育",
         experience: "经历",
         skills: "技能",
-        awards: "奖项",
       },
       sections: {
         quickNavigation: "快速导航",
@@ -100,7 +97,6 @@ export default function Footer() {
     { name: t.navigation.education, href: "#education" },
     { name: t.navigation.experience, href: "#work" },
     { name: t.navigation.skills, href: "#skills" },
-    { name: t.navigation.awards, href: "#awards" },
   ];
 
   return (
@@ -184,103 +180,13 @@ export default function Footer() {
             </nav>
           </div>
 
-          {/* Discover */}
-          <div className="space-y-4">
-            <h3 className="text-foreground text-sm font-semibold tracking-wider">
-              {t.sections.discover}
-            </h3>
-            <nav className="space-y-2">
-              {DATA.discover.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-foreground block text-sm transition-colors"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h3 className="text-foreground text-sm font-semibold tracking-wider">
-              {t.sections.contact}
-            </h3>
-            <div className="text-muted-foreground space-y-2 text-sm">
-              <Link
-                href={DATA.locationLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground block transition-colors"
-              >
-                {DATA.location}
-              </Link>
-              <Link
-                href={getEmail()}
-                className="hover:text-foreground block transition-colors"
-              >
-                {t.contact.support}
-              </Link>
-            </div>
-          </div>
         </div>
 
         <Separator className="my-8" />
 
         {/* Bottom Section */}
-        <div className="space-y-2">
-          {/* Copyright and Legal Links - Desktop: same line, Mobile: separate lines */}
-          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <div className="text-muted-foreground flex items-center gap-2 text-sm">
-              <span>
-                © {currentYear} {isChinese ? DATA.chinese.name : DATA.name}
-              </span>
-              <span>•</span>
-              <span>{t.legal.allRightsReserved}</span>
-            </div>
-
-            <div className="text-muted-foreground flex items-center gap-2 text-sm">
-              <Link
-                href={isChinese ? "/zh/privacy" : "/privacy"}
-                className="hover:text-foreground transition-colors"
-              >
-                {t.legal.privacyPolicy}
-              </Link>
-              <span>•</span>
-              <Link
-                href={isChinese ? "/zh/terms" : "/terms"}
-                className="hover:text-foreground transition-colors"
-              >
-                {t.legal.termsDisclaimer}
-              </Link>
-            </div>
-          </div>
-
-          {/* Last Updated and Made with - Desktop: same line, Mobile: separate lines */}
-          <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-            <div className="text-muted-foreground text-sm">
-              {t.bottom.lastUpdated}: {DATA.lastUpdated}
-            </div>
-
-            <div className="text-muted-foreground flex items-center gap-2 text-sm">
-              <span>{t.bottom.madeWith}</span>
-              <Icons.heartbeat className="h-4 w-4 fill-red-500 text-red-500" />
-              <span>•</span>
-              <span>{t.bottom.modifiedFrom}</span>
-              <Link
-                href="https://github.com/zhengzangw/nextjs-portfolio-blog-research"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground inline-flex items-center gap-1 transition-colors"
-              >
-                <Icons.github className="h-4 w-4" />
-                <span>zhengzangw/nextjs-portfolio-blog-research</span>
-              </Link>
-            </div>
-          </div>
+        <div className="text-muted-foreground text-center text-sm">
+         © Nour Ragab . {currentYear}
         </div>
       </div>
     </footer>

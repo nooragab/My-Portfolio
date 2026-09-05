@@ -8,7 +8,10 @@ import {
   setRequestLocale,
 } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
-import { Inter as FontSans } from "next/font/google";
+import {
+  Inter as FontSans,
+  Playfair_Display as FontSerif,
+} from "next/font/google";
 import { notFound } from "next/navigation";
 
 import Footer from "@/components/blocks/footer";
@@ -28,6 +31,12 @@ import { cn } from "@/lib/utils";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const fontSerif = FontSerif({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-serif",
 });
 
 /* Metadata */
@@ -76,6 +85,7 @@ export default async function LocaleLayout({
         className={cn(
           "bg-background min-h-screen font-sans antialiased",
           fontSans.variable,
+          fontSerif.variable,
         )}
       >
         {/* Main Layout */}
